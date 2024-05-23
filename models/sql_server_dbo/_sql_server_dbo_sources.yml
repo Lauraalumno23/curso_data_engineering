@@ -28,4 +28,15 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: events
-      loaded_at_field:
+        loaded_at_field: _fivetran_synced  #te indica la frescura del dato
+        columns:
+          - name: EVENT_ID
+          - name: PAGE_URL
+          - name: EVENT_TYPE
+          - name: USER_ID
+          - name: PRODUCT_ID
+          - name: SESSION_ID
+          - name: CREATED_AT
+          - name: ORDER_ID
+          - name: _FIVETRAN_DELETED
+          - name: _FIVETRAN_SYNCED
