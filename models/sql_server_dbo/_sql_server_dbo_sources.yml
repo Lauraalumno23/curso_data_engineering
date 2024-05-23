@@ -18,7 +18,7 @@ sources:
     tables:
 
       - name: addresses
-        loaded_at_field: _fivetran_synced
+        loaded_at_field: _fivetran_synced  #te indica la frescura del dato
         columns:
           - name: address_id
           - name: zipcode
