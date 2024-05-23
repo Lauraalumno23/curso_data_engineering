@@ -17,11 +17,15 @@ sources:
 
     tables:
 
-      - name: budget
+      - name: addresses
         loaded_at_field: _fivetran_synced
         columns:
-          - name: _row
-          - name: product_id
-          - name: quantity
-          - name: month
+          - name: address_id
+          - name: zipcode
+          - name: country
+          - name: address
+          - name: state
+          - name: _fivetran_deleted
           - name: _fivetran_synced
+      - name: events
+      loaded_at_field:
