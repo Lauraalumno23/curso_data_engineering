@@ -17,8 +17,8 @@ renamed_casted as (
         order_id,
         product_id,
         quantity,
-        _fivetran_deleted,
-        _fivetran_synced
+        COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
+        convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 
     from src_order_items
 

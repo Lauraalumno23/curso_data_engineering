@@ -7,22 +7,21 @@ with
 
         select
             user_id,
-            updated_at,
+            convert_timezone('UTC', updated_at) as updated_at_UTC,
             address_id,
             last_name,
-            created_at,
+            first_name,
+            convert_timezone('UTC', created_at) as created_at_UTC,
             phone_number,
             total_orders,
-            first_name,
             email,
             coalesce(
                 regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')
                 = true,
                 false
             ) as is_valid_email_address,
-
-            _fivetran_deleted,
-            _fivetran_synced
+            COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
+            convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 
         from src_users
 
