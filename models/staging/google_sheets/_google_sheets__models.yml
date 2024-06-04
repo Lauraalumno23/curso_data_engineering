@@ -7,12 +7,36 @@ models:
           enforced: true
     columns:
       - name: _row
-      - name: product_id
-      - name: quantity
         tests:
           - not_null
+        data_type: number
+        constraints:
+          - type: not_null
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+                to: ref('stg_sql_server_dbo__products')
+                field: product_id
         data_type: text
         constraints:
           - type: not_null
+      - name: quantity
+        tests:
+          - not_null
+          - positive_values
+        data_type: number
+        constraints:
+          - type: not_null
       - name: month
+        tests:
+          - not_null
+        data_type: date
+        constraints:
+          - type: not_null
       - name: DATE_LOAD
+        tests:
+          - not_null
+        data_type: timestamp_tz
+        constraints:
+          - type: not_null

@@ -3,9 +3,9 @@ version: 2
 models:
   - name: stg_sql_server_dbo__addresses
     columns:
-     - name: address_id
-     - name: zipcode
-     - name: country
+     - name: address_id 
+     - name: zipcode 
+     - name: country 
      - name: address
      - name: state
      - name: _fivetran_deleted
