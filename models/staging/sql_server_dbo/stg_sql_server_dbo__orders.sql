@@ -15,20 +15,21 @@ renamed_casted as (
 
     select
         order_id,
-        shipping_service,
-        shipping_cost,
+        COALESCE(NULLIF(shipping_service,''),'unknown') AS shipping_service,
+        md5(COALESCE(NULLIF(shipping_service,''),'unknown')) AS shipping_service_id,
+        shipping_cost as shipping_cost_euros,
         address_id,
-        created_at,
-        promo_id,
-        estimated_delivery_at,
-        order_cost,
+        convert_timezone('UTC', created_at) as created_at_UTC,
+        COALESCE(NULLIF(promo_id,''),'unknown') AS promo_id,
+        convert_timezone('UTC', estimated_delivery_at) as estimated_delivery_at_UTC,
+        order_cost as order_cost_euros,
         user_id,
-        order_total,
-        delivered_at,
-        tracking_id,
+        order_total as order_total_euros,
+        convert_timezone('UTC', delivered_at) as delivered_at_UTC,
+        COALESCE(NULLIF(tracking_id,''),'unknown') AS tracking_id,
         status,
-        _fivetran_deleted,
-        _fivetran_synced
+        COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
+        convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 
     from src_orders
 
