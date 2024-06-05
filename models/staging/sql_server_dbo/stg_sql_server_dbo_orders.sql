@@ -13,12 +13,22 @@ src_orders as (
 
 renamed_casted as (
 
-    select distinct 
+    select
+        order_id,
         shipping_service_id,
-        shipping_service,
+        address_id,
+        created_at_UTC,
+        promo_id,
+        order_cost_euros,
+        user_id,
+        order_total_euros,
+        tracking_id,
+        status_id,
         _fivetran_deleted,
         _fivetran_synced_UTC
+
     from src_orders
+
 )
 
 select * from renamed_casted
