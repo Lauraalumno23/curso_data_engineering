@@ -7,7 +7,7 @@ with
 
 src_addresses as (
 
-    select * from {{ source('sql_server_dbo', 'addresses') }}
+    select * from {{ ref('stg_sql_server_dbo__addresses') }}
 
 ),
 

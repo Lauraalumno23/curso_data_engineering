@@ -5,7 +5,7 @@
 }}
 with 
 
-src_orders as (
+src_base_orders as (
 
     select * from {{ source('sql_server_dbo', 'orders') }}
 
@@ -28,10 +28,15 @@ renamed_casted as (
         convert_timezone('UTC', delivered_at) as delivered_at_UTC,
         COALESCE(NULLIF(tracking_id,''),'unknown') AS tracking_id,
         status,
+        case 
+            when status = 'delivered' then 2
+            when status = 'preparing' then 0
+            when status = 'shipped' then 1
+            end as status_id,
         COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
         convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 
-    from src_orders
+    from src_base_orders
 
 )
 
