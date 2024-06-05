@@ -17,8 +17,11 @@ renamed_casted as (
         tracking_id,
         shipping_service_id,
         shipping_service,
+        shipping_cost_euros,
         estimated_delivery_at_UTC,
-        delivered_at_UTC
+        delivered_at_UTC,
+        _fivetran_deleted,
+        _fivetran_synced_UTC
     from src_orders
 )
 

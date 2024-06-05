@@ -15,7 +15,9 @@ renamed_casted as (
 
     select distinct
         md5(state) as state_id,
-        state
+        state,
+        _fivetran_deleted,
+        _fivetran_synced_UTC
     from src_addresses )
 
 select * from renamed_casted

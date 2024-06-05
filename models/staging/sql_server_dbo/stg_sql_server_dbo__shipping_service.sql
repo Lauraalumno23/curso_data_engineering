@@ -15,7 +15,9 @@ renamed_casted as (
 
     select distinct 
         shipping_service_id,
-        shipping_service
+        shipping_service,
+        _fivetran_deleted,
+        _fivetran_synced_UTC
     from src_orders
 )
 

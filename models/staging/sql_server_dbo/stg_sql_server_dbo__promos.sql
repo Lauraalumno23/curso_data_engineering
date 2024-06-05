@@ -17,6 +17,9 @@ renamed_casted as (
         promo_id,
         discount,
         status,
+        case when status = 'active' then 1
+        else 0
+        end as status_numero,
         _fivetran_deleted,
         _fivetran_synced
 
