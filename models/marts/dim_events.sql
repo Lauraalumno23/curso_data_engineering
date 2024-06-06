@@ -1,4 +1,6 @@
-with src_events as (
+with 
+
+src_events as (
 
     select * from {{ ref('stg_sql_server_dbo__events') }}
 
@@ -9,7 +11,7 @@ renamed_casted as (
     select
         event_id,
         page_url,
-        event_type,
+        event_type_id,
         user_id,
         product_id_hash,
         session_id,

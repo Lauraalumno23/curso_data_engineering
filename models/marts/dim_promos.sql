@@ -8,9 +8,9 @@ renamed_casted as (
 
     select
         promo_id,
+        nombre_promo,
         discount,
-        status,
-        status_numero,
+        status_id,
         _fivetran_deleted,
         _fivetran_synced
 
