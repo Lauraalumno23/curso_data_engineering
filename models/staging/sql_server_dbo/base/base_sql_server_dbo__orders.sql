@@ -28,11 +28,12 @@ renamed_casted as (
         convert_timezone('UTC', delivered_at) as delivered_at_UTC,
         COALESCE(NULLIF(tracking_id,''),'unknown') AS tracking_id,
         status,
+        md5(status) as status_id,
         case 
             when status = 'delivered' then 2
             when status = 'preparing' then 0
             when status = 'shipped' then 1
-            end as status_id,
+            end as status_tipo,
         COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
         convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 

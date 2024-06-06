@@ -7,20 +7,17 @@ with
 
 src_promos as (
 
-    select * from {{ source('sql_server_dbo', 'promos') }}
+    select * from {{ ref('base_sql_server_dbo__promos') }}
 
 ),
 
 renamed_casted as (
 
     select
-        md5(promo_id) as promo_id,
-        promo_id as nombre_promo,
+        promo_id,
+        nombre_promo,
         discount,
-        status,
-        case when status = 'active' then 1
-        else 0
-        end as status_numero,
+        status_id,
         _fivetran_deleted,
         _fivetran_synced
 
