@@ -7,11 +7,11 @@ with
 
         select
             user_id,
-            convert_timezone('UTC', updated_at) as updated_at_UTC,
+            convert_timezone('UTC', updated_at)::date as updated_at_UTC,
             address_id,
             last_name,
             first_name,
-            convert_timezone('UTC', created_at) as created_at_UTC,
+            convert_timezone('UTC', created_at)::date as created_at_UTC,
             phone_number,
             total_orders,
             email,

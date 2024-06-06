@@ -14,9 +14,7 @@ with
             phone_number,
             total_orders,
             email,
-            is_valid_email_address,
-            _fivetran_deleted,
-            _fivetran_synced_UTC
+            is_valid_email_address
 
         from src_users
 

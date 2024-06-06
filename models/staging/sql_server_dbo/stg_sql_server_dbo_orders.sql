@@ -24,6 +24,7 @@ renamed_casted as (
         order_total_euros,
         tracking_id,
         status_id,
+        shipping_cost_euros,
         _fivetran_deleted,
         _fivetran_synced_UTC
 

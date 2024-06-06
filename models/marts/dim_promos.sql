@@ -10,9 +10,7 @@ renamed_casted as (
         promo_id,
         nombre_promo,
         discount,
-        status_id,
-        _fivetran_deleted,
-        _fivetran_synced
+        status_id
 
     from src_promos
 
