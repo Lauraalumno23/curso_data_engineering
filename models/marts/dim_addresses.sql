@@ -11,9 +11,7 @@ renamed_casted as (
         zipcode,
         country,
         address,
-        state_id,
-        _fivetran_deleted,
-        _fivetran_synced_UTC
+        state_id
 
     from src_addresses )
 

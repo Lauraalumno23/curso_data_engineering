@@ -1,6 +1,6 @@
 with src_products as (
 
-    select * from {{ source('sql_server_dbo', 'products') }}
+    select * from {{ ref('stg_sql_server_dbo__products') }}
 
 ),
 
@@ -10,9 +10,7 @@ renamed_casted as (
         product_id,
         price_euro,
         name,
-        inventory,
-        _fivetran_deleted,
-        _fivetran_synced_UTC
+        inventory
 
     from src_products
 
