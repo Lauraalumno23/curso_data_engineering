@@ -14,7 +14,8 @@ src_promos as (
 renamed_casted as (
 
     select
-        promo_id,
+        md5(promo_id) as promo_id,
+        promo_id as nombre_promo,
         discount,
         status,
         case when status = 'active' then 1
