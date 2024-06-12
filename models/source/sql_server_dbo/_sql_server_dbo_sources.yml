@@ -2,7 +2,9 @@ version: 2
 
 sources:
 
-  - name: sql_server_dbo # name of the source 
+  - name: sql_server_dbo # name of the source
+    description: >
+         Datos crudos de la database sql_server_dbo.
     schema: sql_server_dbo # this is the schema our raw data lives in
     database: ALUMNO23_DEV_BRONZE_DB # this is the name of our database
 
@@ -21,81 +23,343 @@ sources:
         loaded_at_field: _fivetran_synced  #te indica la frescura del dato
         columns:
           - name: address_id
+            description: >
+                UUID para cada direccion unica en la base de datos.
+            tests:
+                - not_null
+                - unique
           - name: zipcode
+            description: >
+                Codigo postal.
+            tests:
+              - not_null
+              - positive_values
           - name: country
+            description: >
+                Pais.
+            tests:
+              - not_null
           - name: address
+            description: >
+                Direccion de envio.
+            tests:
+              - not_null
           - name: state
+            description: >
+                Estado.
+            tests:
+              - not_null
           - name: _fivetran_deleted
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _fivetran_synced
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: events
         loaded_at_field: _fivetran_synced  #te indica la frescura del dato
         columns:
           - name: EVENT_ID
+            description: >
+                UUID para cada evento unico en la base de datos.
+            tests:
+                - not_null
+                - unique
           - name: PAGE_URL
+            description: >
+                Direccion web.
+            tests:
+              - not_null
           - name: EVENT_TYPE
+            description: >
+                Tipo de evento.
+            tests:
+              - not_null
           - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: PRODUCT_ID
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: SESSION_ID
+            description: >
+                UUID para cada sesion unica en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: CREATED_AT
+            description: >
+                Cuando se creo el pedido.
+            tests:
+              - not_null
           - name: ORDER_ID
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: orders
         loaded_at_field: _fivetran_synced
         columns:
           - name: ORDER_ID
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: SHIPPING_SERVICE
+            description: >
+                Empresa de mesajeria.
+            tests:
+              - not_null
           - name: SHIPPING_COST
+            description: >
+                  Coste del envio.
+            tests:
+              - not_null
+              - positive_values
           - name: ADDRESS_ID
+            description: >
+                UUID para cada direccion unica en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: CREATED_AT
+            description: >
+                Cuando se cero el pedido.
+            tests:
+              - not_null
           - name: PROMO_ID
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: ESTIMATED_DELIVERY_AT
+            description: >
+                Entrega estimada.
+            tests:
+              - not_null
           - name: ORDER_COST
+            description: >
+                Coste del pedido.
+            tests:
+              - not_null
+              - positive_values
           - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: ORDER_TOTAL
+            description: >
+                Total de pedidos.
+            tests:
+              - not_null
+              - positive_values
           - name: DELIVERED_AT
+            description: >
+                Entrega.
+            tests:
+              - not_null
           - name: TRACKING_ID
+            description: >
+                UUID para cada seguimiento del envio unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: STATUS
+            description: >
+                Estado del pedido.
+            tests:
+              - not_null
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: order_items
         loaded_at_field: _fivetran_synced
         columns:
           - name: ORDER_ID
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: PRODUCT_ID
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: QUANTITY
+            description: >
+              Numero de unidades para cada producto y cada mes para productos.
+            tests:
+              - not_null
+              - positive_values
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: products
         loaded_at_field: _fivetran_synced
         columns:
           - name: PRODUCT_ID
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: PRICE
+            description: >
+                Precio.
+            tests:
+              - not_null
+              - positive_values
           - name: NAME
+            description: >
+                Nombre del producto.
+            tests:
+              - not_null
+              - positive_values
           - name: INVENTORY
+            description: >
+                Precio.
+            tests:
+              - not_null
+              - positive_values
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: promos
         loaded_at_field: _fivetran_synced
         columns:
           - name: PROMO_ID
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: DISCOUNT
+            description: >
+                Descuento.
+            tests:
+              - not_null
+              - positive_values
           - name: STATUS
+            description: >
+                Estado de la promocion .
+            tests:
+              - not_null
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
       - name: users
         loaded_at_field: _fivetran_synced
         columns:
           - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: UPDATED_AT
+            description: >
+                Actualizacion del usuario.
+            tests:
+              - not_null
           - name: ADDRESS_ID
+            description: >
+                UUID para cada direccion unica en la base de datos.
+            tests:
+              - not_null
+              - unique
           - name: LAST_NAME
+            description: >
+                Apellido.
+            tests:
+              - not_null
           - name: CREATED_AT
+            description: >
+                Creacion del usuario.
+            tests:
+              - not_null
           - name: PHONE_NUMBER
+            description: >
+                Numero de telefono.
+            tests:
+              - not_null
           - name: TOTAL_ORDERS
+            description: >
+                Total de pedidos.
+            tests:
+              - not_null
           - name: FIRST_NAME
+            description: >
+                Nombre.
+            tests:
+              - not_null
           - name: EMAIL
+            description: >
+                Correo electronico.
+            tests:
+              - not_null
           - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            tests:
+              - not_null
           - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
               
 

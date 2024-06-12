@@ -3,6 +3,8 @@ version: 2
 sources:
 
   - name: google_sheets # name of the source 
+    description: >
+      Datos crudos de la database google_sheets.
     schema: google_sheets # this is the schema our raw data lives in
     database: ALUMNO23_DEV_BRONZE_DB # this is the name of our database
 
@@ -11,17 +13,41 @@ sources:
       schema: false
       identifier: false
 
-    # freshness:
-      # warn_after: {count: 24, period: hour}
-      # error_after: {count: 48, period: hour}
+    #  freshness:
+    #   warn_after: {count: 24, period: hour}
+    #   error_after: {count: 48, period: hour}
 
     tables:
 
       - name: budget
         loaded_at_field: _fivetran_synced
+        description: >
+          Datos sobre el presupuesto -> budget.
         columns:
           - name: _row
+            description: >
+              Numero de cada fila de google_sheet.
+            tests:
+              - not_null
+              - unique
           - name: product_id
+            description: >
+              UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
           - name: quantity
+            description: >
+              Numero de unidades para cada producto y cada mes para productos.
+            tests:
+              - not_null
+              - positive_values
           - name: month
+            description: >
+              Presupuesto para cada mes -> Fin de mes.
+            tests:
+              - not_null
           - name: _fivetran_synced
+            description: >
+              Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
