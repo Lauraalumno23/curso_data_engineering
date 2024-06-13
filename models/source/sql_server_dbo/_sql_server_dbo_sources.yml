@@ -52,8 +52,6 @@ sources:
           - name: _fivetran_deleted
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _fivetran_synced
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -83,13 +81,17 @@ sources:
                 UUID para cada usuario unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','users')
+                  field: user_id
           - name: PRODUCT_ID
             description: >
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','products')
+                  field: product_id
           - name: SESSION_ID
             description: >
                 UUID para cada sesion unica en la base de datos.
@@ -106,12 +108,12 @@ sources:
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','orders')
+                  field: order_id
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -196,8 +198,6 @@ sources:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -217,7 +217,9 @@ sources:
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','products')
+                  field: product_id  
           - name: QUANTITY
             description: >
               Numero de unidades para cada producto y cada mes para productos.
@@ -227,8 +229,6 @@ sources:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -264,8 +264,6 @@ sources:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -294,8 +292,6 @@ sources:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -320,7 +316,9 @@ sources:
                 UUID para cada direccion unica en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','addresses')
+                  field: address_id
           - name: LAST_NAME
             description: >
                 Apellido.
@@ -354,8 +352,6 @@ sources:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.

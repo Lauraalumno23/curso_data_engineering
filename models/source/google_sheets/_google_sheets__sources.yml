@@ -35,6 +35,9 @@ sources:
               UUID para cada producto unico en la base de datos.
             tests:
               - not_null
+              - relationships:
+                  to: source('sql_server_dbo', 'products')
+                  field: product_id
           - name: quantity
             description: >
               Numero de unidades para cada producto y cada mes para productos.

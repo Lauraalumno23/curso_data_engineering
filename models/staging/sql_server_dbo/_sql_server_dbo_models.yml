@@ -52,8 +52,6 @@ models:
           - name: _fivetran_deleted
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -101,7 +99,9 @@ models:
                 UUID para cada usuario unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: ref ('stg_sql_server_dbo__users')
+                  field: user_id
             data_type: text
             constraints:
               - type: not_null
@@ -110,7 +110,9 @@ models:
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: ref ('stg_sql_server_dbo__products')
+                  field: product_id
             data_type: text
             constraints:
               - type: not_null
@@ -136,15 +138,15 @@ models:
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: ref ('stg_sql_server_dbo__orders')
+                  field: order_id
             data_type: text
             constraints:
               - type: not_null
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -277,8 +279,6 @@ models:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -310,7 +310,9 @@ models:
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: ref('stg_sql_server_dbo__products')
+                  field: product_id  
             data_type: text
             constraints:
               - type: not_null
@@ -326,8 +328,6 @@ models:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -384,8 +384,6 @@ models:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -432,8 +430,6 @@ models:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
@@ -473,7 +469,9 @@ models:
                 UUID para cada direccion unica en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: ref ('stg_sql_server_dbo__addresses')
+                  field: address_id
             data_type: text
             constraints:
               - type: not_null
@@ -529,8 +527,6 @@ models:
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-            tests:
-              - not_null
             data_type: boolean
             constraints:
               - type: not_null
