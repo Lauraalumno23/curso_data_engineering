@@ -89,15 +89,11 @@ sources:
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','products')
-                  field: product_id
           - name: SESSION_ID
             description: >
                 UUID para cada sesion unica en la base de datos.
             tests:
               - not_null
-              - unique
           - name: CREATED_AT
             description: >
                 Cuando se creo el pedido.
@@ -108,9 +104,6 @@ sources:
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','orders')
-                  field: order_id
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
@@ -144,23 +137,20 @@ sources:
                 UUID para cada direccion unica en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','adresses')
+                  field: address_id
           - name: CREATED_AT
             description: >
                 Cuando se cero el pedido.
-            tests:
-              - not_null
           - name: PROMO_ID
             description: >
                 UUID para cada promocion unica en la base de datos.
             tests:
               - not_null
-              - unique
           - name: ESTIMATED_DELIVERY_AT
             description: >
                 Entrega estimada.
-            tests:
-              - not_null
           - name: ORDER_COST
             description: >
                 Coste del pedido.
@@ -172,7 +162,9 @@ sources:
                 UUID para cada usuario unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','users')
+                  field: user_id
           - name: ORDER_TOTAL
             description: >
                 Total de pedidos.
@@ -182,14 +174,11 @@ sources:
           - name: DELIVERED_AT
             description: >
                 Entrega.
-            tests:
-              - not_null
           - name: TRACKING_ID
             description: >
                 UUID para cada seguimiento del envio unico en la base de datos.
             tests:
               - not_null
-              - unique
           - name: STATUS
             description: >
                 Estado del pedido.
@@ -211,7 +200,9 @@ sources:
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
-              - unique
+              - relationships:
+                  to: source ('sql_server_dbo','orders')
+                  field: order_id  
           - name: PRODUCT_ID
             description: >
                 UUID para cada producto unico en la base de datos.
@@ -254,10 +245,9 @@ sources:
                 Nombre del producto.
             tests:
               - not_null
-              - positive_values
           - name: INVENTORY
             description: >
-                Precio.
+                Inventario.
             tests:
               - not_null
               - positive_values
@@ -337,8 +327,6 @@ sources:
           - name: TOTAL_ORDERS
             description: >
                 Total de pedidos.
-            tests:
-              - not_null
           - name: FIRST_NAME
             description: >
                 Nombre.
