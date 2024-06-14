@@ -7,7 +7,7 @@ with
 
 src_products as (
 
-    select * from {{ source('sql_server_dbo', 'products') }}
+    select * from {{ ref('base_sql_server_dbo__products') }}
 
 ),
 

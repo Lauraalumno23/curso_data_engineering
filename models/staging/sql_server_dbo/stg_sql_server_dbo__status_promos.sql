@@ -7,7 +7,7 @@ with
 
 src_promos as (
 
-    select * from {{ ref('base_sql_server_dbo__promos') }}
+    select * from {{ ref('stg_sql_server_dbo__promos') }}
 
 ),
 
@@ -16,9 +16,9 @@ renamed_casted as (
     select distinct
         status_id,
         status,
-        status_numero,
+        status_modo,
         _fivetran_deleted,
-        _fivetran_synced
+        _fivetran_synced_utc
 
     from src_promos
 
