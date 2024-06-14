@@ -765,4 +765,65 @@ models:
               - not_null
             data_type: timestamp_tz
             constraints:
-              - type: not_null     
+              - type: not_null 
+
+  - name: stg_sql_server_dbo__vendedores
+    description: "Datos de la tabla stg_sql_server_dbo__vendedores"
+    columns:
+          - name: vendedores_id
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+              - not_null
+              - unique
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: first_name
+            description: >
+                Nombre del vendedor.
+            tests:
+              - not_null 
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: last_name
+            description: >
+                Apellido del vendedor.
+            tests:
+              - not_null 
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: email
+            description: >
+                Correo electronico del vendedor.
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: salary
+            description: >
+                Correo electronico del vendedor.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: address
+            description: >
+                Direccion del vendedor.
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: country
+            description: >
+                Pais donde vive el vendedor.
+            data_type: text
+            constraints:
+              - type: not_null 
+          - name: _FIVETRAN_SYNCED_UTC
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null    

@@ -345,7 +345,7 @@ sources:
       - name: vendedores
         loaded_at_field: _fivetran_synced
         columns:
-          - name: vendedores_ID
+          - name: ID
             description: >
                 UUID para cada vendedor unico en la base de datos.
             tests:
@@ -374,6 +374,11 @@ sources:
           - name: address
             description: >
                 Direccion del vendedor.
+            tests:
+              - not_null
+          - name: country
+            description: >
+                Pais donde vive el vendedor.
             tests:
               - not_null
           - name: _FIVETRAN_SYNCED
