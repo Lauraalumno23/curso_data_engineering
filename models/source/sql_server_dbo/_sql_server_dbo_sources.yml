@@ -342,4 +342,42 @@ sources:
             tests:
               - not_null
               
-
+      - name: vendedores
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: vendedores_ID
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+              - not_null
+              - unique
+          - name: first_name
+            description: >
+                Nombre del vendedor.
+            tests:
+              - not_null
+          - name: last_name
+            description: >
+                Apellido del vendedor.
+            tests:
+              - not_null
+          - name: email
+            description: >
+                Correo electronico del vendedor.
+            tests:
+              - not_null
+          - name: salary
+            description: >
+                Salario del vendedor.
+            tests:
+              - not_null
+          - name: address
+            description: >
+                Direccion del vendedor.
+            tests:
+              - not_null
+          - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
