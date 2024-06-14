@@ -12,17 +12,18 @@ src_promos as (
 ),
 
 renamed_casted as (
-
-    select
-        promo_id,
-        nombre_promo,
-        discount,
-        status_id,
-        _fivetran_deleted,
-        _fivetran_synced
-
+    select 
+        distinct {{ dbt_utils.generate_surrogate_key(['promo_id']) }} as promo_id_hash,
+        promo_id as promo_name,
+        discount as discount_euros,
+        md5(status) as status_id,
+        case when status = 'active' then 1
+            else 0
+        end as status_modo,
+        status,
+        COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
+        convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
+        
     from src_promos
-
 )
-
 select * from renamed_casted

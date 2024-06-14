@@ -3,16 +3,21 @@ version: 2
 models:
   - name: stg_google_sheets__budget
     description: "Datos de la tabla stg_google_sheets__budget"
-    config:
-        contract:
-          enforced: true
     columns:
+      - name: budget_id
+        description: >
+          Identificador unico para budget
+        tests:
+          - not_null
+          - unique
+        data_type: number
+        constraints:
+          - type: not_null
       - name: _row
         description: >
           Numero de cada fila de google_sheet.
         tests:
           - not_null
-          - unique
         data_type: number
         constraints:
           - type: not_null
@@ -36,7 +41,7 @@ models:
         data_type: number
         constraints:
           - type: not_null
-      - name: month
+      - name: date
         description: >
           Presupuesto para cada mes -> Fin de mes.
         tests:

@@ -7,7 +7,7 @@ with
 
 src_events as (
 
-    select * from {{ ref('base_sql_server_dbo__events') }}
+    select * from {{ ref('stg_sql_server_dbo__events') }}
 
 ),
 

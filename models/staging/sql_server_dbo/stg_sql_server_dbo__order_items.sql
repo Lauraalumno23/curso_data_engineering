@@ -7,16 +7,17 @@ with
 
 src_order_items as (
 
-    select * from {{ source('sql_server_dbo', 'order_items') }}
+    select * from {{ ref('base_sql_server_dbo__order_items') }}
 
 ),
 
 renamed_casted as (
 
     select
+        {{ dbt_utils.generate_surrogate_key(['order_id','product_id']) }} as order_items_id,
         order_id,
         product_id,
-        quantity,
+        quantity::integer as quantity,
         COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
         convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 

@@ -5,22 +5,23 @@
 }}
 with 
 
-src_promos as (
+src_products as (
 
-    select * from {{ source('sql_server_dbo', 'promos') }}
+    select * from {{ source('sql_server_dbo', 'products') }}
 
 ),
 
 renamed_casted as (
 
     select
-        promo_id,
-        discount,
-        status,
+        product_id,
+        price,
+        name,
+        inventory,
         _fivetran_deleted,
         _fivetran_synced
 
-    from src_promos
+    from src_products
 
 )
 

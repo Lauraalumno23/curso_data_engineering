@@ -7,7 +7,7 @@ with
 
 src_addresses as (
 
-    select * from {{ source('sql_server_dbo', 'addresses') }}
+    select * from {{ ref('base_sql_server_dbo__addresses') }}
 
 ),
 
@@ -15,10 +15,10 @@ renamed_casted as (
 
     select
         address_id,
-        zipcode,
+        zipcode::integer as zipcode,
         country,
         address,
-        md5(state) as state_id,
+        {{ dbt_utils.generate_surrogate_key(['state']) }} AS state_id,
         state,
         COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
         convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC

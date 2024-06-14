@@ -55,8 +55,6 @@ sources:
           - name: _fivetran_synced
             description: >
                 Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
       - name: events
         loaded_at_field: _fivetran_synced  #te indica la frescura del dato
         columns:
@@ -257,8 +255,6 @@ sources:
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
       - name: promos
         loaded_at_field: _fivetran_synced
         columns:

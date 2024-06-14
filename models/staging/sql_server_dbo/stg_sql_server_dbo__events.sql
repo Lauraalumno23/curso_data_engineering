@@ -16,14 +16,19 @@ renamed_casted as (
     select
         event_id,
         page_url,
-        event_type_id,
+        {{ dbt_utils.generate_surrogate_key(['event_type']) }} as event_type_id,
+        event_type,
         user_id,
-        product_id_hash,
+        case when product_id = '' then null
+        else {{ dbt_utils.generate_surrogate_key(['product_id']) }}
+        end as product_id_hash,
         session_id,
         created_at,
-        order_id_hash,
-        _fivetran_deleted,
-        _fivetran_synced_UTC
+        case when order_id = '' then null
+        else {{ dbt_utils.generate_surrogate_key(['order_id']) }}
+        end as order_id_hash,
+        COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
+        convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
 
     from src_events
 

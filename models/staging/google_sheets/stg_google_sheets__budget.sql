@@ -12,11 +12,12 @@ WITH src_budget AS (
 
 renamed_casted AS (
     SELECT
-        _row
-        , product_id
-        , quantity
-        , month
-        , _fivetran_synced AS date_load
+        {{ dbt_utils.generate_surrogate_key(['_row']) }} AS budget_id,
+        _row,
+        product_id,
+        quantity::integer as quantity,
+        month as date,
+        _fivetran_synced AS date_load
     FROM src_budget
     )
 
