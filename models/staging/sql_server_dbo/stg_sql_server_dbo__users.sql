@@ -1,17 +1,21 @@
 {{ config(materialized="view") }}
 with
 
-    src_users as (select * from {{ ref("base_sql_server_dbo__users") }}),
+    src_users as (select * from {{ ref("base_sql_server_dbo__users") }}
+    
+    ),
 
     renamed_casted as (
 
         select
             user_id,
-            convert_timezone('UTC', updated_at)::date as updated_at_UTC,
+            to_date(updated_at) AS updated_at_fecha,
+            to_time(updated_at) AS updated_at_hora,
             {{ dbt_utils.generate_surrogate_key(['address_id']) }} as address_id,
             last_name,
             first_name,
-            convert_timezone('UTC', created_at)::date as created_at_UTC,
+            to_date(created_at) AS created_at_fecha,
+            to_time(created_at) AS created_at_hora,
             phone_number,
             total_orders,
             email,

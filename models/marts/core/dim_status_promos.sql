@@ -1,22 +1,18 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 with 
 
 src_promos as (
 
-    select * from {{ ref('stg_sql_server_dbo_orders') }}
+    select * from {{ ref('stg_sql_server_dbo__status_promos') }}
 
 ),
 
 renamed_casted as (
 
     select distinct
-        status_orders_id,
+        status_id,
         status,
-        status_tipo,
+        status_modo,
         _fivetran_deleted,
         _fivetran_synced_utc
 

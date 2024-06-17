@@ -1,13 +1,9 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 with 
 
 src_promos as (
 
-    select * from {{ ref('stg_sql_server_dbo_orders') }}
+    select * from {{ ref('stg_sql_server_dbo__status_orders') }}
 
 ),
 

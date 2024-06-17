@@ -7,7 +7,8 @@
 
 WITH src_budget AS (
     SELECT * 
-    FROM {{ source('google_sheets', 'budget') }}
+    FROM {{ ref('base_sql_server_dbo__budget') }}
+    
     ),
 
 renamed_casted AS (

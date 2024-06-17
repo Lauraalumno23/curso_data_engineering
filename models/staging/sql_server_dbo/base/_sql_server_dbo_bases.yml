@@ -1,87 +1,92 @@
 version: 2
 
-sources:
-
-  - name: sql_server_dbo # name of the source
-    description: >
-         Datos crudos de la database sql_server_dbo.
-    schema: sql_server_dbo # this is the schema our raw data lives in
-    database: ALUMNO23_DEV_BRONZE_DB # this is the name of our database
-
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-
-    # freshness:
-      # warn_after: {count: 24, period: hour}
-      # error_after: {count: 48, period: hour}
-
-    tables:
-
-      - name: addresses
-        description: >
-          Datos crudos de addresses
-        loaded_at_field: _fivetran_synced  #te indica la frescura del dato
-        columns:
+models:
+  - name: base_sql_server_dbo__addresses
+    description: "Datos de todas las direcciones"
+    columns:
           - name: address_id
             description: >
                 UUID para cada direccion unica en la base de datos.
             tests:
                 - not_null
                 - unique
+            data_type: text
+            constraints:
+              - type: not_null
           - name: zipcode
             description: >
                 Codigo postal.
             tests:
               - not_null
               - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
           - name: country
             description: >
                 Pais.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: address
             description: >
                 Direccion de envio.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: state
             description: >
                 Estado.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: _fivetran_deleted
             description: >
                 Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
           - name: _fivetran_synced
             description: >
                 Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-            
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
 
-      - name: events
-        description: >
-          Datos crudos de events
-        loaded_at_field: _fivetran_synced  #te indica la frescura del dato
-        columns:
+  - name: base_sql_server_dbo__events
+    description: "Datos de todos los eventos"
+    columns:
           - name: EVENT_ID
             description: >
                 UUID para cada evento unico en la base de datos.
             tests:
                 - not_null
                 - unique
+            data_type: text
+            constraints:
+              - type: not_null
           - name: PAGE_URL
             description: >
                 Direccion web.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: EVENT_TYPE
             description: >
                 Tipo de evento.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: USER_ID
             description: >
                 UUID para cada usuario unico en la base de datos.
@@ -90,231 +95,81 @@ sources:
               - relationships:
                   to: source ('sql_server_dbo','users')
                   field: user_id
+            data_type: text
+            constraints:
+              - type: not_null
           - name: PRODUCT_ID
             description: >
-                UUID para cada producto unico en la base de datos.
-            tests:
-              - not_null
+                Producto.
+            data_type: text
+            constraints:
+              - type: not_null
           - name: SESSION_ID
             description: >
                 UUID para cada sesion unica en la base de datos.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: CREATED_AT
             description: >
-                Cuando se creo el pedido.
+                Fecha y hora cuando se creo el pedido.
             tests:
               - not_null
-          - name: ORDER_ID
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: order_id
             description: >
                 UUID para cada pedido unico en la base de datos.
-            tests:
-              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
-          - name: _FIVETRAN_SYNCED
+            data_type: boolean
+            constraints:
+              - type: not_null
+          - name: _fivetran_synced
             description: >
                 Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-      - name: orders
-        loaded_at_field: _fivetran_synced
-        columns:
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+
+  - name: base_sql_server_dbo__orders
+    description: "Datos de todos los pedidos"
+    columns:
           - name: ORDER_ID
             description: >
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
               - unique
+            data_type: text
+            constraints:
+              - type: not_null
           - name: SHIPPING_SERVICE
             description: >
                 Empresa de mesajeria.
             tests:
               - not_null
               - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','']
+                  values: ['ups','fedex','dhl','usps','unknown','']
+            data_type: text
+            constraints:
+              - type: not_null
           - name: SHIPPING_COST
             description: >
                   Coste del envio.
             tests:
               - not_null
               - positive_values
-          - name: ADDRESS_ID
-            description: >
-                UUID para cada direccion unica en la base de datos.
-            tests:
-              - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','adresses')
-                  field: address_id
-          - name: CREATED_AT
-            description: >
-                Cuando se cero el pedido.
-          - name: PROMO_ID
-            description: >
-                UUID para cada promocion unica en la base de datos.
-            tests:
-              - not_null
-              - accepted_values:
-                  values: ['task-force','instruction set','leverage','Optional','Mandatory','Digitized','']
-          - name: ESTIMATED_DELIVERY_AT
-            description: >
-                Entrega estimada.
-          - name: ORDER_COST
-            description: >
-                Coste del pedido.
-            tests:
-              - not_null
-              - positive_values
-          - name: USER_ID
-            description: >
-                UUID para cada usuario unico en la base de datos.
-            tests:
-              - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','users')
-                  field: user_id
-          - name: ORDER_TOTAL
-            description: >
-                Total de pedidos.
-            tests:
-              - not_null
-              - positive_values
-          - name: DELIVERED_AT
-            description: >
-                Entrega.
-          - name: TRACKING_ID
-            description: >
-                UUID para cada seguimiento del envio unico en la base de datos.
-            tests:
-              - not_null
-          - name: STATUS
-            description: >
-                Estado del pedido.
-            tests:
-              - not_null
-              - accepted_values:
-                  values: ['delivered','preparing','shipped']
-          - name: _FIVETRAN_SYNCED
-            description: >
-                Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-          - name: vendedores_id
-            description: >
-                Vendedor que ha vendido el producto.
-            tests:
-              - not_null 
-      - name: order_items
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: ORDER_ID
-            description: >
-                UUID para cada pedido unico en la base de datos.
-            tests:
-              - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','orders')
-                  field: order_id  
-          - name: PRODUCT_ID
-            description: >
-                UUID para cada producto unico en la base de datos.
-            tests:
-              - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','products')
-                  field: product_id  
-          - name: QUANTITY
-            description: >
-              Numero de unidades para cada producto y cada mes para productos.
-            tests:
-              - not_null
-              - positive_values
-          - name: _FIVETRAN_DELETED
-            description: >
-                Muestra si los datos fueron eliminados.
-          - name: _FIVETRAN_SYNCED
-            description: >
-                Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-      - name: products
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: PRODUCT_ID
-            description: >
-                UUID para cada producto unico en la base de datos.
-            tests:
-              - not_null
-              - unique
-          - name: PRICE
-            description: >
-                Precio.
-            tests:
-              - not_null
-              - positive_values
-          - name: NAME
-            description: >
-                Nombre del producto.
-            tests:
-              - not_null
-          - name: INVENTORY
-            description: >
-                Inventario.
-            tests:
-              - not_null
-              - positive_values
-          - name: _FIVETRAN_DELETED
-            description: >
-                Muestra si los datos fueron eliminados.
-          - name: _FIVETRAN_SYNCED
-            description: >
-                Fecha en la que los datos fueron cargados.
-      - name: promos
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: PROMO_ID
-            description: >
-                UUID para cada promocion unica en la base de datos.
-            tests:
-              - not_null
-              - unique
-          - name: DISCOUNT
-            description: >
-                Descuento.
-            tests:
-              - not_null
-              - positive_values
-          - name: STATUS
-            description: >
-                Estado de la promocion .
-            tests:
-              - not_null
-              - accepted_values:
-                  values: ['inactive','active']
-          - name: _FIVETRAN_DELETED
-            description: >
-                Muestra si los datos fueron eliminados.
-          - name: _FIVETRAN_SYNCED
-            description: >
-                Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-      - name: users
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: USER_ID
-            description: >
-                UUID para cada usuario unico en la base de datos.
-            tests:
-              - not_null
-              - unique
-          - name: UPDATED_AT
-            description: >
-                Actualizacion del usuario.
-            tests:
-              - not_null
+            data_type: float
+            constraints:
+              - type: not_null
           - name: ADDRESS_ID
             description: >
                 UUID para cada direccion unica en la base de datos.
@@ -323,84 +178,399 @@ sources:
               - relationships:
                   to: source ('sql_server_dbo','addresses')
                   field: address_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: CREATED_AT
+            description: >
+                Fecha y hora en la que se creo el pedido.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: PROMO_ID
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: estimated_delivery_at
+            description: >
+                Fecha y hora en la que se prevee se entregue el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: ORDER_COST
+            description: >
+                Coste del pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: source ('sql_server_dbo','users')
+                  field: user_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: ORDER_TOTAL
+            description: >
+                Total de pedidos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: delivered_at
+            description: >
+                Fecha y hora en la que se entrego el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: TRACKING_ID
+            description: >
+                UUID para cada seguimiento del pedido unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: source ('sql_server_dbo','tracking')
+                  field: tracking_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: STATUS
+            description: >
+                Estado del pedido.
+            tests:
+              - not_null
+              - accepted_values: 
+                  values: ['preparing','shipped','delivered']
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: vendedores_id
+            description: >
+                Vendedor que ha vendido el producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+              
+  - name: base_sql_server_dbo__order_items
+    description: "Datos de todos los order_items"
+    columns:
+          - name: ORDER_ID
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: source ('sql_server_dbo','orders')
+                  field: order_id  
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: PRODUCT_ID
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: source ('sql_server_dbo','products')
+                  field: product_id  
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: QUANTITY
+            description: >
+              Numero de unidades para cada producto y cada mes para productos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_SYNCED
+            description: >
+                Muestra si los datos fueron eliminados.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          
+  - name: base_sql_server_dbo__products
+    description: "Datos de todos los products"
+    columns:
+          - name: PRODUCT_ID
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - unique
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: PRICE
+            description: >
+                Precio.
+            tests:
+                - not_null
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: NAME
+            description: >
+                Nombre del producto.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: INVENTORY
+            description: >
+                Cantidad de producto en el inventario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+
+  - name: base_sql_server_dbo__promos
+    description: "Datos de todas las promos"
+    columns:
+          - name: PROMO_ID
+            description: >
+                Nombre de la promocion.
+            tests:
+              - not_null 
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: DISCOUNT
+            description: >
+                Descuento.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: STATUS
+            description: >
+                Estado de la promocion.
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_DELETED
+            description: >
+                Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
+          - name: _FIVETRAN_SYNCED
+            description: >
+                Fecha en la que los datos fueron cargados.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+
+  - name: base_sql_server_dbo__users
+    description: "Datos de todos los users"
+    columns:
+          - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - unique
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: UPDATED_AT
+            description: >
+                Fecha y hora en la que se actualizo el usuario.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: ADDRESS_ID
+            description: >
+                UUID para cada direccion del usuario unica en la base de datos.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: LAST_NAME
             description: >
                 Apellido.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: CREATED_AT
             description: >
-                Creacion del usuario.
+                Fecha y hora de creacion del usuario.
             tests:
               - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
           - name: PHONE_NUMBER
             description: >
                 Numero de telefono.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: TOTAL_ORDERS
             description: >
                 Total de pedidos.
+            tests:
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
           - name: FIRST_NAME
             description: >
                 Nombre.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: EMAIL
             description: >
                 Correo electronico.
             tests:
               - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.
+            data_type: boolean
+            constraints:
+              - type: not_null
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
-            tests:
-              - not_null
-              
-      - name: vendedores
-        loaded_at_field: _fivetran_synced
-        columns:
-          - name: VENDEDORES
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+
+  - name: base_sql_server_dbo__vendedores
+    description: "Datos de todos los vendedores"
+    columns:
+          - name: vendedores
             description: >
-                UUID para cada vendedor unico en la base de datos.
+                Numero de vendedor.
             tests:
               - not_null
               - unique
+            data_type: text
+            constraints:
+              - type: not_null
           - name: first_name
             description: >
                 Nombre del vendedor.
             tests:
-              - not_null
+              - not_null 
+            data_type: text
+            constraints:
+              - type: not_null
           - name: last_name
             description: >
                 Apellido del vendedor.
             tests:
-              - not_null
+              - not_null 
+            data_type: text
+            constraints:
+              - type: not_null
           - name: email
             description: >
                 Correo electronico del vendedor.
             tests:
-              - not_null
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: salary
             description: >
-                Salario del vendedor.
+                Correo electronico del vendedor.
             tests:
-              - not_null
+                - not_null
+                - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
           - name: address
             description: >
                 Direccion del vendedor.
             tests:
-              - not_null
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: country
             description: >
                 Pais donde vive el vendedor.
             tests:
-              - not_null
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null 
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
             tests:
               - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null    

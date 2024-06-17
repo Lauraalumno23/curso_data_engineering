@@ -1,8 +1,8 @@
 version: 2
 
 models:
-  - name: stg_sql_server_dbo__addresses
-    description: "Datos de todas las direcciones"
+  - name: dim_addresses
+    description: "Tabla de dimensiones de todas las direcciones"
     columns:
           - name: address_id
             description: >
@@ -44,16 +44,8 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__state')
+                  to: ref ('dim_state')
                   field: state_id
-            data_type: text
-            constraints:
-              - type: not_null
-          - name: state
-            description: >
-                Estado.
-            tests:
-              - not_null
             data_type: text
             constraints:
               - type: not_null
@@ -70,8 +62,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__events
-    description: "Datos de todos los eventos"
+  - name: fact_events
+    description: "Tabla dimensional de todos los eventos"
     columns:
           - name: EVENT_ID
             description: >
@@ -96,16 +88,8 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__events_type')
+                  to: ref ('dim_event_type')
                   field: event_type_id
-            data_type: text
-            constraints:
-              - type: not_null
-          - name: EVENT_TYPE
-            description: >
-                Tipo de evento.
-            tests:
-              - not_null
             data_type: text
             constraints:
               - type: not_null
@@ -115,7 +99,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__users')
+                  to: ref ('dim_users')
                   field: user_id
             data_type: text
             constraints:
@@ -169,8 +153,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo_orders
-    description: "Datos de todos los pedidos"
+  - name: dim_orders
+    description: "Tabla dimensional de los pedidos"
     columns:
           - name: ORDER_ID
             description: >
@@ -181,23 +165,13 @@ models:
             data_type: text
             constraints:
               - type: not_null
-          - name: SHIPPING_SERVICE
-            description: >
-                Empresa de mesajeria.
-            tests:
-              - not_null
-              - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','unknown','']
-            data_type: text
-            constraints:
-              - type: not_null
           - name: SHIPPING_SERVICE_ID
             description: >
                 UUID para cada servicio de mensajeria unica en la base de datos.
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__shipping_service')
+                  to: ref ('dim_shipping_service')
                   field: shipping_service_id
             data_type: text
             constraints:
@@ -217,7 +191,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__addresses')
+                  to: ref ('dim_addresses')
                   field: address_id
             data_type: text
             constraints:
@@ -273,7 +247,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__users')
+                  to: ref ('dim_users')
                   field: user_id
             data_type: text
             constraints:
@@ -305,18 +279,8 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__tracking')
+                  to: ref ('dim_tracking')
                   field: tracking_id
-            data_type: text
-            constraints:
-              - type: not_null
-          - name: STATUS
-            description: >
-                Estado del pedido.
-            tests:
-              - not_null
-              - accepted_values: 
-                  values: ['preparing','shipped','delivered']
             data_type: text
             constraints:
               - type: not_null
@@ -326,17 +290,9 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('stg_sql_server_dbo__status_orders')
+                  to: ref ('dim_status_orders')
                   field: status_orders_id
             data_type: text
-            constraints:
-              - type: not_null
-          - name: STATUS_TIPO
-            description: >
-                Estado del pedido.
-            tests:
-              - not_null
-            data_type: number
             constraints:
               - type: not_null
           - name: vendedores_id
@@ -345,7 +301,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref('stg_sql_server_dbo__status_vendedores')
+                  to: ref('dim_vendedores')
                   field: vendedores_id 
             data_type: varchar
             constraints:
@@ -365,8 +321,8 @@ models:
             constraints:
               - type: not_null
               
-  - name: stg_sql_server_dbo__order_items
-    description: "Datos de todos los order_items"
+  - name: fact_order_items
+    description: "Tabla dimensional de order items"
     columns:
           - name: ORDER_ITEMS_ID
             description: >
@@ -383,7 +339,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref('stg_sql_server_dbo__orders')
+                  to: ref('dim_orders')
                   field: order_id  
             data_type: text
             constraints:
@@ -394,7 +350,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref('stg_sql_server_dbo__products')
+                  to: ref('dim_products')
                   field: product_id  
             data_type: text
             constraints:
@@ -421,8 +377,8 @@ models:
             constraints:
               - type: not_null
           
-  - name: stg_sql_server_dbo__products
-    description: "Datos de todos los products"
+  - name: dim_products
+    description: "Tabla dimensional de products"
     columns:
           - name: PRODUCT_ID
             description: >
@@ -471,8 +427,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__promos
-    description: "Datos de todas las promos"
+  - name: dim_promos
+    description: "Tabla dimensional de promos"
     columns:
           - name: promo_id
             description: >
@@ -503,21 +459,9 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref('stg_sql_server_dbo__status_promos')
+                  to: ref('dim_status_promos')
                   field: status_id  
             data_type: text
-            constraints:
-              - type: not_null
-          - name: STATUS
-            description: >
-                Estado de la promocion.
-            data_type: text
-            constraints:
-              - type: not_null
-          - name: status_modo
-            description: >
-                Estado en el que se encuentra la promocion .
-            data_type: number
             constraints:
               - type: not_null
           - name: _FIVETRAN_DELETED
@@ -533,8 +477,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__users
-    description: "Datos de todos los users"
+  - name: dim_users
+    description: "Tabla dimensional de users"
     columns:
           - name: USER_ID
             description: >
@@ -636,8 +580,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__state
-    description: "Datos de todos los state"
+  - name: dim_state
+    description: "Tabla dimensional de state"
     columns:
           - name: STATE_ID
             description: >
@@ -671,8 +615,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__events_type
-    description: "Datos de todos los event_type"
+  - name: dim_event_type
+    description: "Tabla dimensional de event_type"
     columns:
           - name: EVENT_TYPE_ID
             description: >
@@ -706,8 +650,8 @@ models:
             constraints:
               - type: not_null
       
-  - name: stg_sql_server_dbo__status_orders
-    description: "Datos de todos los status_orders"
+  - name: dim_status_orders
+    description: "Tabla dimensional de status_orders"
     columns:
           - name: status_orders_id
             description: >
@@ -751,8 +695,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__shipping_service
-    description: "Datos de todos los shipping_service"
+  - name: dim_shipping_service
+    description: "Tabla dimensional de shipping_service"
     columns:
           - name: shipping_service_id
             description: >
@@ -774,8 +718,8 @@ models:
             constraints:
               - type: not_null
 
-  - name: stg_sql_server_dbo__status_promos
-    description: "Datos de todos los status_promos"
+  - name: dim_status_promos
+    description: "Tabla dimensional de status_promos"
     columns:
           - name: status_id
             description: >
@@ -819,8 +763,8 @@ models:
             constraints:
               - type: not_null 
 
-  - name: stg_sql_server_dbo__vendedores
-    description: "Datos de todos los vendedores"
+  - name: dim_vendedores
+    description: "Tabla dimensional de vendedores"
     columns:
           - name: vendedores_id
             description: >
@@ -866,6 +810,14 @@ models:
               - type: not_null
           - name: address_id
             description: >
+                UUID de la Direccion del vendedor unica.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: address
+            description: >
                 Direccion del vendedor.
             tests:
                 - not_null
@@ -887,10 +839,67 @@ models:
               - not_null
             data_type: timestamp_tz
             constraints:
-              - type: not_null    
+              - type: not_null
+            
+  - name: fact_budget
+    description: "Tabla dimensional del budget"
+    columns:
+      - name: budget_id
+        description: >
+          Identificador unico para budget
+        tests:
+          - not_null
+          - unique
+        data_type: number
+        constraints:
+          - type: not_null
+      - name: _row
+        description: >
+          Numero de cada fila de google_sheet.
+        tests:
+          - not_null
+        data_type: number
+        constraints:
+          - type: not_null
+      - name: product_id
+        description: >
+          UUID para cada producto unico en la base de datos.
+        tests:
+          - not_null
+          - relationships:
+                to: ref('dim_products')
+                field: product_id
+        data_type: text
+        constraints:
+          - type: not_null
+      - name: quantity
+        description: >
+          Numero de unidades para cada producto y cada mes para productos.
+        tests:
+          - not_null
+          - positive_values
+        data_type: number
+        constraints:
+          - type: not_null
+      - name: date
+        description: >
+          Presupuesto para cada mes -> Fin de mes.
+        tests:
+          - not_null
+        data_type: date
+        constraints:
+          - type: not_null
+      - name: DATE_LOAD
+        description: >
+          Fecha en la que los datos fueron cargados.
+        tests:
+          - not_null
+        data_type: timestamp_tz
+        constraints:
+          - type: not_null
 
-  - name: stg_sql_server_dbo__date
-    description: "Tabla de la stg_sql_server_dbo__date"
+  - name: dim_date
+    description: "Tabla dimensional de las fechas"
     columns:
       - name: date_id
         description: >

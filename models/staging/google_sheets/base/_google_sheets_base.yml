@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: base_sql_server_dbo__budget
+    description: "Datos los budget"
+    columns:
+          - name: _row
+            description: >
+                Numero de cada fila de google_sheet 
+            tests:
+                - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: product_id
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: source('sql_server_dbo', 'products')
+                  field: product_id
+            data_type: varchar
+            constraints:
+              - type: not_null
+          - name: quantity
+            description: >
+                Cantidad de budget.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: month
+            description: >
+                Fecha.
+            tests:
+              - not_null
+            data_type: date
+            constraints:
+              - type: not_null
+          - name: _fivetran_synced
+            description: >
+                Fecha en la que los datos fueron cargados.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
