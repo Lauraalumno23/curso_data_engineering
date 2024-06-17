@@ -5,10 +5,12 @@ WITH src_budget AS (
 
 renamed_casted AS (
     SELECT
-        _row
-        , product_id
-        , quantity
-        , month
+        budget_id,
+        _row,
+        product_id,
+        quantity,
+        date,
+        date_load
     FROM src_budget
     )
 

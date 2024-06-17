@@ -9,6 +9,8 @@ src_events as (
 
     select * from {{ ref('base_sql_server_dbo__events') }}
 
+    
+
 ),
 
 renamed_casted as (
@@ -23,12 +25,15 @@ renamed_casted as (
         else {{ dbt_utils.generate_surrogate_key(['product_id']) }}
         end as product_id_hash,
         session_id,
-        created_at,
+        to_date(created_at) AS created_at_fecha,
+        to_time(created_at) AS created_at_hora,
         case when order_id = '' then null
         else {{ dbt_utils.generate_surrogate_key(['order_id']) }}
         end as order_id_hash,
         COALESCE(_fivetran_deleted,false) AS _fivetran_deleted,
         convert_timezone('UTC', _fivetran_synced) as _fivetran_synced_UTC
+        
+        
 
     from src_events
 

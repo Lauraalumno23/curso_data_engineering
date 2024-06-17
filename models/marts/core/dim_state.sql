@@ -1,14 +1,9 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 with 
 
 src_addresses as (
 
-    select * from {{ ref('stg_sql_server_dbo__addresses') }}
-    
+    select * from {{ ref('stg_sql_server_dbo__state') }}
 
 ),
 

@@ -27,6 +27,7 @@ renamed_casted as (
         delivered_at,
         tracking_id,
         status,
+        vendedores_id,
         _fivetran_deleted,
         _fivetran_synced
 

@@ -8,6 +8,7 @@ with
 src_products as (
 
     select * from {{ ref('base_sql_server_dbo__products') }}
+    
 
 ),
 

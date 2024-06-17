@@ -26,6 +26,4 @@ renamed_casted as (
     from src_addresses )
 
 
-
-
 select * from renamed_casted

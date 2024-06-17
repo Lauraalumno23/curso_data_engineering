@@ -8,12 +8,13 @@ with
 src_promos as (
 
     select * from {{ ref('base_sql_server_dbo__promos') }}
+    
 
 ),
 
 renamed_casted as (
-    select 
-        distinct {{ dbt_utils.generate_surrogate_key(['promo_id']) }} as promo_id_hash,
+    select distinct
+        {{ dbt_utils.generate_surrogate_key(['promo_id']) }} as promo_id,
         promo_id as promo_name,
         discount as discount_euros,
         md5(status) as status_id,

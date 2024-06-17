@@ -1,27 +1,24 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 with 
 
 source as (
 
-    select * from {{ source('sql_server_dbo', 'vendedores') }}
+    select * from {{ ref('stg_sql_server_dbo__vendedores') }}
 
 ),
 
 renamed as (
 
     select
-        vendedores,
+        vendedores_id,
         first_name,
         last_name,
         email,
         salary,
+        address_id,
         address,
         country,
-        _fivetran_synced
+        _fivetran_synced_UTC
 
     from source
 
