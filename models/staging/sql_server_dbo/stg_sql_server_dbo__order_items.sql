@@ -1,20 +1,10 @@
-{{
-  config(
-    materialized='incremental',
-    unique_key='order_items_id'
-  )
-}}
+
 with 
 
 src_order_items as (
 
     select * from {{ ref('base_sql_server_dbo__order_items') }}
 
-    {% if is_incremental() %}
-
-	  where _fivetran_synced > (select max(_fivetran_synced_UTC) from {{ this }})
-
-    {% endif %}
 
 ),
 

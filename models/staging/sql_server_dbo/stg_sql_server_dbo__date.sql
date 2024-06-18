@@ -3,7 +3,7 @@ WITH int_date AS (
 
 )
 SELECT
-    md5(date_day) as date_id,
+    {{ dbt_utils.generate_surrogate_key(['DATE_DAY']) }} as date_id,
     DATE_DAY,
     DAY_OF_WEEK,
     DAY_OF_WEEK_NAME,

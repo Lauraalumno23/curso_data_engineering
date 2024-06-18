@@ -33,14 +33,14 @@ addresses as (
 
 scr_zipcode as (
     SELECT address_id,
-        count(zipcode) as count_zipcode
+        count(distinct zipcode) as count_zipcode
     FROM {{ ref('stg_sql_server_dbo__addresses') }}
     group by address_id
 ),
 
 scr_state as (
     SELECT address_id,
-        count(state_id) as count_state
+        count(distinct state_id) as count_state
     FROM {{ ref('stg_sql_server_dbo__addresses') }}
     group by address_id
 ),
@@ -77,7 +77,8 @@ SELECT
         round((order_total_by_user-order_cost_by_user),2) as shipping_cost_by_user,
         round(((t.total_orders)/sou.orders_by_users),2) as total_orders_by_user,
         (t.total_orders/sz.count_zipcode) as total_orders_by_zipcode,
-        (t.total_orders/ss.count_state) as total_orders_by_state
+        (t.total_orders/ss.count_state) as total_orders_by_state,
+        (o.delivered_at_fecha-o.created_at_fecha) as tiempo_espera_pedido
         
 FROM 
     orders o

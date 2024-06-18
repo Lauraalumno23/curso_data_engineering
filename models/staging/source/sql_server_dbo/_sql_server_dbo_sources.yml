@@ -132,7 +132,7 @@ sources:
                 Empresa de mesajeria.
             tests:
               - not_null
-              - accepted_values: 
+              - acepted_values: 
                   values: ['ups','fedex','dhl','usps','']
           - name: SHIPPING_COST
             description: >
