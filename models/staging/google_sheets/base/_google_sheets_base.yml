@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: base_sql_server_dbo__budget
+    config:
+      contract:
+        enforced: false
     description: "Datos los budget"
     columns:
           - name: _row

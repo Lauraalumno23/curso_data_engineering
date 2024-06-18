@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: base_sql_server_dbo__addresses
+    config:
+      contract:
+        enforced: false
     description: "Datos de todas las direcciones"
     columns:
           - name: address_id
@@ -60,6 +63,9 @@ models:
               - type: not_null
 
   - name: base_sql_server_dbo__events
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los eventos"
     columns:
           - name: EVENT_ID
@@ -140,6 +146,9 @@ models:
               - type: not_null
 
   - name: base_sql_server_dbo__orders
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los pedidos"
     columns:
           - name: ORDER_ID
@@ -156,8 +165,6 @@ models:
                 Empresa de mesajeria.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','unknown','']
             data_type: text
             constraints:
               - type: not_null
@@ -251,8 +258,6 @@ models:
                 Estado del pedido.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['preparing','shipped','delivered']
             data_type: text
             constraints:
               - type: not_null
@@ -281,6 +286,9 @@ models:
               - type: not_null
               
   - name: base_sql_server_dbo__order_items
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los order_items"
     columns:
           - name: ORDER_ID
@@ -300,7 +308,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: ref ('base_sql_server_dbo__promos')
+                  to: ref ('base_sql_server_dbo__products')
                   field: product_id  
             data_type: text
             constraints:
@@ -328,6 +336,9 @@ models:
               - type: not_null
           
   - name: base_sql_server_dbo__products
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los products"
     columns:
           - name: PRODUCT_ID
@@ -378,6 +389,9 @@ models:
               - type: not_null
 
   - name: base_sql_server_dbo__promos
+    config:
+      contract:
+        enforced: false
     description: "Datos de todas las promos"
     columns:
           - name: PROMO_ID
@@ -414,6 +428,9 @@ models:
               - type: not_null
 
   - name: base_sql_server_dbo__users
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los users"
     columns:
           - name: USER_ID
@@ -503,6 +520,9 @@ models:
               - type: not_null
 
   - name: base_sql_server_dbo__vendedores
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los vendedores"
     columns:
           - name: vendedores

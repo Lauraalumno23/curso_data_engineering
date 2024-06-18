@@ -1,0 +1,313 @@
+version: 2
+models:
+  - name: fact_ventas
+    config:
+      contract:
+        enforced: false
+    description: "Tabla dimensional de los ventas"
+    columns:
+          - name: ORDER_ID
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: SHIPPING_SERVICE_ID
+            description: >
+                UUID para cada servicio de mensajeria unica en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref ('dim_shipping_service')
+                  field: shipping_service_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: SHIPPING_COST_EUROS
+            description: >
+                  Coste del envio.
+            tests:
+              - not_null
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: address_order
+            description: >
+                Direccion del pedido.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref ('dim_addresses')
+                  field: address_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: CREATED_AT_FECHA
+            description: >
+                Fecha en la que se creo el pedido.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: CREATED_AT_HORA
+            description: >
+                Hora en la que se creo el pedido.
+            tests:
+              - not_null
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: PROMO_ID
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: estimated_delivery_at_fecha
+            description: >
+                Fecha en la que se prevee se entregue el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: estimated_delivery_at_hora
+            description: >
+                Hora en la que se prevee entregar el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: ORDER_COST_EUROS
+            description: >
+                Coste del pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: USER_ID
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref ('dim_users')
+                  field: user_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: ORDER_TOTAL_EUROS
+            description: >
+                Total de pedidos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: float
+            constraints:
+              - type: not_null
+          - name: delivered_at_fecha
+            description: >
+                Fecha en la que se entrego el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: delivered_at_hora
+            description: >
+                Hora en la que se entrego el pedido.
+            data_type: timestamp_tz
+            constraints:
+              - type: not_null
+          - name: TRACKING_ID
+            description: >
+                UUID para cada seguimiento del pedido unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref ('dim_tracking')
+                  field: tracking_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: status_orders_id
+            description: >
+                UUID para cada estado del pedido unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref ('dim_status_orders')
+                  field: status_orders_id
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: vendedores_id
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_vendedores')
+                  field: vendedores_id 
+            data_type: varchar
+            constraints:
+              - type: not_null
+          - name: total_orders
+            description: >
+                Total de pedidos.
+            tests:
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_user
+            description: >
+                Coste del pedido por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_total_by_user
+            description: >
+                Coste total del pedido por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_user
+            description: >
+                Coste del envio por usuario.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_user
+            description: >
+                Pedidos totales por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_zipcode
+            description: >
+                Pedidos totales por codigo postal.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_state
+            description: >
+                Pedidos totales por estado.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: Tiempo_espera_pedido
+            description: >
+                Tiempo de espera del pedido.
+            tests:
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_item_euros
+            description: >
+                Coste del envio por producto.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_item_euros
+            description: >
+                Coste del pedido por producto.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_order_by_item_euros
+            description: >
+                Precio total del pedido por producto.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_per_order
+            description: >
+                Precio por pedido.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_and_shipping_by_item_euros
+            description: >
+                Pedido y envio por articulo.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_discount_by_item_euros
+            description: >
+                Descuento total por articulo.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: item_per_order
+            description: >
+                Numero de articulo por pedido.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_product
+            description: >
+                Precio del producto.
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: first_name
+            description: >
+                Nombre del usuario.
+            tests:
+              - not_null
+            data_type: varchar
+            constraints:
+              - type: not_null
+          - name: last_name
+            description: >
+                Apellido del usuario.
+            tests:
+              - not_null
+            data_type: varchar
+            constraints:
+              - type: not_null
+          - name: address_user
+            description: >
+                 Direccion del usuario
+            tests:
+              - not_null
+            data_type: varchar
+            constraints:
+              - type: not_null
+          - name: phone_number
+            description: >
+                Numero de telefono del usuario.
+            tests:
+              - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: email
+            description: >
+                Email del usuario.
+            tests:
+              - not_null
+            data_type: varchar
+            constraints:
+              - type: not_null

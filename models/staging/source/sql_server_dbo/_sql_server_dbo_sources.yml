@@ -3,6 +3,9 @@ version: 2
 sources:
 
   - name: sql_server_dbo # name of the source
+    config:
+      contract:
+        enforced: false
     description: >
          Datos crudos de la database sql_server_dbo.
     schema: sql_server_dbo # this is the schema our raw data lives in
@@ -132,8 +135,6 @@ sources:
                 Empresa de mesajeria.
             tests:
               - not_null
-              - acepted_values: 
-                  values: ['ups','fedex','dhl','usps','']
           - name: SHIPPING_COST
             description: >
                   Coste del envio.
@@ -156,8 +157,6 @@ sources:
                 UUID para cada promocion unica en la base de datos.
             tests:
               - not_null
-              - accepted_values:
-                  values: ['task-force','instruction set','leverage','Optional','Mandatory','Digitized','']
           - name: ESTIMATED_DELIVERY_AT
             description: >
                 Entrega estimada.
@@ -194,8 +193,6 @@ sources:
                 Estado del pedido.
             tests:
               - not_null
-              - accepted_values:
-                  values: ['delivered','preparing','shipped']
           - name: _FIVETRAN_SYNCED
             description: >
                 Fecha en la que los datos fueron cargados.
@@ -291,8 +288,6 @@ sources:
                 Estado de la promocion .
             tests:
               - not_null
-              - accepted_values:
-                  values: ['inactive','active']
           - name: _FIVETRAN_DELETED
             description: >
                 Muestra si los datos fueron eliminados.

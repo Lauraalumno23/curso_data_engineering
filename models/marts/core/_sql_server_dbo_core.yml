@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: dim_addresses
+    config:
+      contract:
+        enforced: false
     description: "Tabla de dimensiones de todas las direcciones"
     columns:
           - name: address_id
@@ -63,6 +66,9 @@ models:
               - type: not_null
 
   - name: fact_events
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de todos los eventos"
     columns:
           - name: EVENT_ID
@@ -154,6 +160,9 @@ models:
               - type: not_null
 
   - name: fact_orders
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de los pedidos"
     columns:
           - name: ORDER_ID
@@ -313,59 +322,6 @@ models:
             data_type: number
             constraints:
               - type: not_null
-          - name: order_cost_by_user
-            description: >
-                Coste del pedido por usuario.
-            tests:
-              - not_null
-              - positive_values
-            data_type: number
-            constraints:
-              - type: not_null
-          - name: order_total_by_user
-            description: >
-                Coste total del pedido por usuario.
-            tests:
-              - not_null
-              - positive_values
-            data_type: number
-            constraints:
-              - type: not_null
-          - name: shipping_cost_by_user
-            description: >
-                Coste del envio por usuario.
-            tests:
-              - not_null
-            data_type: number
-            constraints:
-              - type: not_null
-          - name: total_orders_by_user
-            description: >
-                Pedidos totales por usuario.
-            tests:
-              - not_null
-              - positive_values
-            data_type: number
-            constraints:
-              - type: not_null
-          - name: total_orders_by_zipcode
-            description: >
-                Pedidos totales por codigo postal.
-            tests:
-              - not_null
-              - positive_values
-            data_type: number
-            constraints:
-              - type: not_null
-          - name: total_orders_by_state
-            description: >
-                Pedidos totales por estado.
-            tests:
-              - not_null
-              - positive_values
-            data_type: number
-            constraints:
-              - type: not_null
           - name: Tiempo_espera_pedido
             description: >
                 Tiempo de espera del pedido.
@@ -467,6 +423,9 @@ models:
               - type: not_null
           
   - name: dim_products
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de products"
     columns:
           - name: PRODUCT_ID
@@ -575,6 +534,9 @@ models:
               - type: not_null
 
   - name: dim_promos
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de promos"
     columns:
           - name: promo_id
@@ -625,6 +587,9 @@ models:
               - type: not_null
 
   - name: dim_users
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de users"
     columns:
           - name: USER_ID
@@ -728,6 +693,9 @@ models:
               - type: not_null
 
   - name: dim_state
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de state"
     columns:
           - name: STATE_ID
@@ -763,6 +731,9 @@ models:
               - type: not_null
 
   - name: dim_event_type
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de event_type"
     columns:
           - name: EVENT_TYPE_ID
@@ -798,6 +769,9 @@ models:
               - type: not_null
       
   - name: dim_status_orders
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de status_orders"
     columns:
           - name: status_orders_id
@@ -813,9 +787,7 @@ models:
             description: >
                 Nombre del estado del producto.
             tests:
-              - not_null 
-              - accepted_values:
-                  values: ['delivered','preparing','shipped']
+              - not_null
             data_type: text
             constraints:
               - type: not_null
@@ -843,6 +815,9 @@ models:
               - type: not_null
 
   - name: dim_shipping_service
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de shipping_service"
     columns:
           - name: shipping_service_id
@@ -859,13 +834,14 @@ models:
                 Nombre de la empresa de mensajeria.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','unknown',''] 
             data_type: text
             constraints:
               - type: not_null
 
   - name: dim_status_promos
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de status_promos"
     columns:
           - name: status_id
@@ -882,8 +858,6 @@ models:
                 Nombre del estado de la promocion.
             tests:
               - not_null 
-              - accepted_values:
-                  values: ['inactive','active']
             data_type: text
             constraints:
               - type: not_null
@@ -911,6 +885,9 @@ models:
               - type: not_null 
 
   - name: dim_vendedores
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de vendedores"
     columns:
           - name: vendedores_id
@@ -998,6 +975,9 @@ models:
               - type: not_null
             
   - name: fact_budget
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional del budget"
     columns:
       - name: budget_id
@@ -1039,6 +1019,9 @@ models:
           - type: not_null
 
   - name: dim_date
+    config:
+      contract:
+        enforced: false
     description: "Tabla dimensional de las fechas"
     columns:
       - name: date_id

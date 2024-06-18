@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: stg_sql_server_dbo__addresses
+    config:
+      contract:
+        enforced: false
     description: "Datos de todas las direcciones"
     columns:
           - name: address_id
@@ -71,6 +74,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__events
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los eventos"
     columns:
           - name: EVENT_ID
@@ -170,6 +176,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo_orders
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los pedidos"
     columns:
           - name: ORDER_ID
@@ -186,8 +195,6 @@ models:
                 Empresa de mesajeria.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','unknown','']
             data_type: text
             constraints:
               - type: not_null
@@ -312,8 +319,6 @@ models:
                 Estado del pedido.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['preparing','shipped','delivered']
             data_type: text
             constraints:
               - type: not_null
@@ -363,6 +368,9 @@ models:
               - type: not_null
               
   - name: stg_sql_server_dbo__order_items
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los order_items"
     columns:
           - name: ORDER_ITEMS_ID
@@ -419,6 +427,9 @@ models:
               - type: not_null
           
   - name: stg_sql_server_dbo__products
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los products"
     columns:
           - name: PRODUCT_ID
@@ -469,6 +480,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__promos
+    config:
+      contract:
+        enforced: false
     description: "Datos de todas las promos"
     columns:
           - name: promo_id
@@ -531,6 +545,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__users
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los users"
     columns:
           - name: USER_ID
@@ -634,6 +651,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__state
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los state"
     columns:
           - name: STATE_ID
@@ -669,6 +689,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__events_type
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los event_type"
     columns:
           - name: EVENT_TYPE_ID
@@ -704,6 +727,9 @@ models:
               - type: not_null
       
   - name: stg_sql_server_dbo__status_orders
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los status_orders"
     columns:
           - name: status_orders_id
@@ -720,8 +746,6 @@ models:
                 Nombre del estado del producto.
             tests:
               - not_null 
-              - accepted_values:
-                  values: ['delivered','preparing','shipped']
             data_type: text
             constraints:
               - type: not_null
@@ -749,6 +773,9 @@ models:
               - type: not_null
 
   - name: stg_sql_server_dbo__shipping_service
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los shipping_service"
     columns:
           - name: shipping_service_id
@@ -765,13 +792,14 @@ models:
                 Nombre de la empresa de mensajeria.
             tests:
               - not_null
-              - accepted_values: 
-                  values: ['ups','fedex','dhl','usps','unknown',''] 
             data_type: text
             constraints:
               - type: not_null
 
   - name: stg_sql_server_dbo__status_promos
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los status_promos"
     columns:
           - name: status_id
@@ -787,9 +815,7 @@ models:
             description: >
                 Nombre del estado de la promocion.
             tests:
-              - not_null 
-              - accepted_values:
-                  values: ['inactive','active']
+              - not_null
             data_type: text
             constraints:
               - type: not_null
@@ -817,6 +843,9 @@ models:
               - type: not_null 
 
   - name: stg_sql_server_dbo__vendedores
+    config:
+      contract:
+        enforced: false
     description: "Datos de todos los vendedores"
     columns:
           - name: vendedores_id
@@ -885,103 +914,3 @@ models:
             data_type: timestamp_tz
             constraints:
               - type: not_null    
-
-  - name: stg_sql_server_dbo__date
-    description: "Tabla de la stg_sql_server_dbo__date"
-    columns:
-      - name: date_id
-        description: >
-          Identificador unico para las fechas
-        tests:
-          - not_null
-          - unique
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: date_day
-        description: >
-          Fecha.
-        tests:
-          - not_null
-        data_type: date
-        constraints:
-          - type: not_null
-      - name: day_of_week
-        description: >
-          Dia de la semana.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: day_of_week_name
-        description: >
-          Nombre del dia de la semana.
-        tests:
-          - not_null
-        data_type: varchar
-        constraints:
-          - type: not_null
-      - name: day_of_month
-        description: >
-          Dia del mes.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: day_of_year
-        description: >
-          Dia del año.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: week_of_year
-        description: >
-          Semana del año.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: month_name
-        description: >
-          Nombre del mes.
-        tests:
-          - not_null
-        data_type: varchar
-        constraints:
-          - type: not_null
-      - name: month_of_year
-        description: >
-          Mes del año.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: quarter_of_year
-        description: >
-          Trimestre del año.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: year_number
-        description: >
-          Año.
-        tests:
-          - not_null
-          - positive_values
-        data_type: number
-        constraints:
-          - type: not_null

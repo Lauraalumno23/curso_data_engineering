@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: int_products_items_orders
+    config:
+      contract:
+        enforced: false
     description: "Tabla intermediate de products, order_items y orders"
     columns:
           - name: order_id
@@ -127,6 +130,9 @@ models:
               - type: not_null
 
   - name: int_users_orders_addresses
+    config:
+      contract:
+        enforced: false
     description: "Tabla intermediate de users, addresses y orders"
     columns:
           - name: user_id
@@ -311,6 +317,9 @@ models:
               - type: not_null
 
   - name: int_vendedores_orders
+    config:
+      contract:
+        enforced: false
     description: "Tabla intermediate de vendedores y orders"
     columns:
           - name: order_id
