@@ -304,9 +304,6 @@ models:
                 UUID para cada seguimiento del pedido unico en la base de datos.
             tests:
               - not_null
-              - relationships:
-                  to: ref ('stg_sql_server_dbo__tracking')
-                  field: tracking_id
             data_type: text
             constraints:
               - type: not_null

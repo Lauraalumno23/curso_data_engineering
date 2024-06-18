@@ -48,14 +48,16 @@ models:
         +schema: google_sheets
       sql_server_dbo:
         +schema: sql_server_dbo
-      intermediate:
-        +schema: intermediate
+      source:
+        +schema: source
       
     marts:
       +materialized: table
       +database: "{{ env_var('DBT_ENVIRONMENTS') }}_GOLD_DB"
       core:
         +schema: core
+      intermediate:
+        +schema: intermediate
 
 seeds:
   +schema: seed_data
@@ -64,3 +66,12 @@ snapshots:
   +transient: false
   +target_database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
   +target_schema: snapshots
+tests:
+  +materialized: test
+  +database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
+  generic:
+    +schema: generic
+  google_sheets:
+    +schema: google_sheets
+  sql_server_dbo:
+    +schema: sql_server_dbo

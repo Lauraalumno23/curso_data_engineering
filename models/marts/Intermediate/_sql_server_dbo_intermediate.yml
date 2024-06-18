@@ -1,0 +1,399 @@
+version: 2
+
+models:
+  - name: int_products_items_orders
+    description: "Tabla intermediate de products, order_items y orders"
+    columns:
+          - name: order_id
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: user_id
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: address_id
+            description: >
+                UUID para cada direccion del pedidou unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: product_id
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: order_total_euros
+            description: >
+                Coste total del pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: quantity
+            description: >
+                Cantitdad del producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: item_per_order
+            description: >
+                Artículo por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_product
+            description: >
+                Precio del producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_item_euros
+            description: >
+                Coste del envio por articulo.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_and_shipping_by_item_euros
+            description: >
+                Coste y envio del articulo.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_order_by_item_euros
+            description: >
+                Coste total por articulo.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_per_order
+            description: >
+                Precio por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_item_euros
+            description: >
+                Coste del pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_discount_by_item_euros
+            description: >
+                Total del descuento por articulo.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+
+  - name: int_users_orders_addresses
+    description: "Tabla intermediate de users, addresses y orders"
+    columns:
+          - name: user_id
+            description: >
+                UUID para cada usuario unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: order_id
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: address_order
+            description: >
+                UUID para cada direccion del pedido unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: shipping_service_id
+            description: >
+                UUID para cada servicio de mensajeria unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: promo_id
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: state_id
+            description: >
+                UUID para cada estado unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: zipcode
+            description: >
+                Codigo postal.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: address_user
+            description: >
+                UUID para cada direccion del usuario unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: count_orders
+            description: >
+                Conteo de pedidos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: count_users
+            description: >
+                Conteo de usuarios.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: orders_by_users
+            description: >
+                Pedidos por usuarios.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: count_zipcode
+            description: >
+                Conteo codigos postales.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: count_state
+            description: >
+                Conteo estados.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders
+            description: >
+                Total de pedidos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_user
+            description: >
+                Coste por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_total_by_user
+            description: >
+                Coste total por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_user
+            description: >
+                Coste del envio por usuario.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_user
+            description: >
+                Coste total por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_zipcode
+            description: >
+                Pedidos totales por codigo postal.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_state
+            description: >
+                Pedidos totales por estado.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: tiempo_espera_pedido
+            description: >
+                tiempo de espera del pedido.
+            tests:
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+
+  - name: int_vendedores_orders
+    description: "Tabla intermediate de vendedores y orders"
+    columns:
+          - name: order_id
+            description: >
+                UUID para cada pedido unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: address_pedido
+            description: >
+                UUID para cada direccion del pedido unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: promo_id
+            description: >
+                UUID para cada promocion unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: vendedores_id
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: product_id
+            description: >
+                UUID para cada producto unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: address_vendedor
+            description: >
+                UUID para cada direccion del usuario unica en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: quantity
+            description: >
+                 Cantidad de producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: salary
+            description: >
+                Salario del vendedor.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: item_per_order
+            description: >
+                Articulo por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_products_sold
+            description: >
+                Total de productos vendidos.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null

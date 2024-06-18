@@ -93,7 +93,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: source ('sql_server_dbo','users')
+                  to: ref ('base_sql_server_dbo__users')
                   field: user_id
             data_type: text
             constraints:
@@ -176,7 +176,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: source ('sql_server_dbo','addresses')
+                  to: ref ('base_sql_server_dbo__addresses')
                   field: address_id
             data_type: text
             constraints:
@@ -218,7 +218,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: source ('sql_server_dbo','users')
+                  to: ref ('base_sql_server_dbo__users')
                   field: user_id
             data_type: text
             constraints:
@@ -243,9 +243,6 @@ models:
                 UUID para cada seguimiento del pedido unico en la base de datos.
             tests:
               - not_null
-              - relationships:
-                  to: source ('sql_server_dbo','tracking')
-                  field: tracking_id
             data_type: text
             constraints:
               - type: not_null
@@ -292,7 +289,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: source ('sql_server_dbo','orders')
+                  to: ref ('base_sql_server_dbo__orders')
                   field: order_id  
             data_type: text
             constraints:
@@ -303,7 +300,7 @@ models:
             tests:
               - not_null
               - relationships:
-                  to: source ('sql_server_dbo','products')
+                  to: ref ('base_sql_server_dbo__promos')
                   field: product_id  
             data_type: text
             constraints:

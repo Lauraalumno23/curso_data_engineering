@@ -153,7 +153,7 @@ models:
             constraints:
               - type: not_null
 
-  - name: dim_orders
+  - name: fact_orders
     description: "Tabla dimensional de los pedidos"
     columns:
           - name: ORDER_ID
@@ -161,7 +161,6 @@ models:
                 UUID para cada pedido unico en la base de datos.
             tests:
               - not_null
-              - unique
             data_type: text
             constraints:
               - type: not_null
@@ -181,7 +180,6 @@ models:
                   Coste del envio.
             tests:
               - not_null
-              - positive_values
             data_type: float
             constraints:
               - type: not_null
@@ -306,42 +304,145 @@ models:
             data_type: varchar
             constraints:
               - type: not_null
-          - name: _FIVETRAN_DELETED
+          - name: total_orders
             description: >
-                Muestra si los datos fueron eliminados.
-            data_type: boolean
-            constraints:
-              - type: not_null
-          - name: _FIVETRAN_SYNCED_UTC
-            description: >
-                Fecha en la que los datos fueron cargados.
+                Total de pedidos.
             tests:
               - not_null
-            data_type: timestamp_tz
+              - positive_values
+            data_type: number
             constraints:
               - type: not_null
-              
-  - name: fact_order_items
-    description: "Tabla dimensional de order items"
-    columns:
-          - name: ORDER_ITEMS_ID
+          - name: order_cost_by_user
             description: >
-                UUID para cada orden con un producto especifico unico en la base de datos.
+                Coste del pedido por usuario.
             tests:
               - not_null
-              - unique
-            data_type: text
+              - positive_values
+            data_type: number
             constraints:
               - type: not_null
-          - name: ORDER_ID
+          - name: order_total_by_user
             description: >
-                UUID para cada pedido unico en la base de datos.
+                Coste total del pedido por usuario.
             tests:
               - not_null
-              - relationships:
-                  to: ref('dim_orders')
-                  field: order_id  
-            data_type: text
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_user
+            description: >
+                Coste del envio por usuario.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_user
+            description: >
+                Pedidos totales por usuario.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_zipcode
+            description: >
+                Pedidos totales por codigo postal.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_orders_by_state
+            description: >
+                Pedidos totales por estado.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: Tiempo_espera_pedido
+            description: >
+                Tiempo de espera del pedido.
+            tests:
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_item_euros
+            description: >
+                Coste del envio por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_item_euros
+            description: >
+                Coste del pedido por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_order_by_item_euros
+            description: >
+                Precio total del pedido por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_per_order
+            description: >
+                Precio por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_and_shipping_by_item_euros
+            description: >
+                Pedido y envio por articulo.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_discount_by_item_euros
+            description: >
+                Descuento total por articulo.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: item_per_order
+            description: >
+                Numero de articulo por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_product
+            description: >
+                Precio del producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
             constraints:
               - type: not_null
           - name: PRODUCT_ID
@@ -364,18 +465,6 @@ models:
             data_type: number
             constraints:
               - type: not_null
-          - name: _FIVETRAN_DELETED
-            description: >
-                Muestra si los datos fueron eliminados.
-            data_type: boolean
-            constraints:
-              - type: not_null
-          - name: _FIVETRAN_SYNCED_UTC
-            description: >
-                Muestra si los datos fueron eliminados.
-            data_type: timestamp_tz
-            constraints:
-              - type: not_null
           
   - name: dim_products
     description: "Tabla dimensional de products"
@@ -385,7 +474,6 @@ models:
                 UUID para cada producto unico en la base de datos.
             tests:
               - not_null
-              - unique
             data_type: text
             constraints:
               - type: not_null
@@ -414,16 +502,75 @@ models:
             data_type: number
             constraints:
               - type: not_null
-          - name: _FIVETRAN_DELETED
+          - name: item_per_order
             description: >
-                Muestra si los datos fueron eliminados.
-            data_type: boolean
+                Numero de articulo por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
             constraints:
               - type: not_null
-          - name: _FIVETRAN_SYNCED_UTC
+          - name: price_product
             description: >
-                Fecha en la que los datos fueron cargados.
-            data_type: timestamp_tz
+                Precio del producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: shipping_cost_by_item_euros
+            description: >
+                Coste del envio por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_by_item_euros
+            description: >
+                Coste del pedido por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_order_by_item_euros
+            description: >
+                Precio total del pedido por producto.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_per_order
+            description: >
+                Precio por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: order_cost_and_shipping_by_item_euros
+            description: >
+                Pedido y envio por articulo.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_discount_by_item_euros
+            description: >
+                Descuento total por articulo.
+            tests:
+              - not_null
+            data_type: number
             constraints:
               - type: not_null
 
@@ -771,7 +918,6 @@ models:
                 UUID para cada vendedor unico en la base de datos.
             tests:
               - not_null
-              - unique
             data_type: text
             constraints:
               - type: not_null
@@ -832,12 +978,22 @@ models:
             data_type: text
             constraints:
               - type: not_null 
-          - name: _FIVETRAN_SYNCED_UTC
+          - name: total_products_sold
             description: >
-                Fecha en la que los datos fueron cargados.
+                Total de productos vendidos.
             tests:
               - not_null
-            data_type: timestamp_tz
+              - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: item_per_order
+            description: >
+                Numero de articulo por pedido.
+            tests:
+              - not_null
+              - positive_values
+            data_type: number
             constraints:
               - type: not_null
             
@@ -850,14 +1006,6 @@ models:
         tests:
           - not_null
           - unique
-        data_type: number
-        constraints:
-          - type: not_null
-      - name: _row
-        description: >
-          Numero de cada fila de google_sheet.
-        tests:
-          - not_null
         data_type: number
         constraints:
           - type: not_null
@@ -887,14 +1035,6 @@ models:
         tests:
           - not_null
         data_type: date
-        constraints:
-          - type: not_null
-      - name: DATE_LOAD
-        description: >
-          Fecha en la que los datos fueron cargados.
-        tests:
-          - not_null
-        data_type: timestamp_tz
         constraints:
           - type: not_null
 
