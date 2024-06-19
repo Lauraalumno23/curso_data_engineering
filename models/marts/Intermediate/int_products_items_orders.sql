@@ -45,7 +45,8 @@ SELECT
         round ((o.order_total_euros/soi.item_per_order),2) as total_order_by_item_euros,
         round (sum(oi.quantity/p.price_euro)over(partition by oi.order_id),2) as price_per_order,        
         round ((p.price_euro * oi.quantity) + (o.shipping_cost_euros / soi.item_per_order),2) AS order_cost_and_shipping_by_item_euros,
-        round (((o.order_total_euros/soi.item_per_order)-(oi.quantity*p.price_euro)/soi.item_per_order)-(o.shipping_cost_euros/soi.item_per_order),2) as total_discount_by_item_euros
+        round (((o.order_total_euros/soi.item_per_order)-(oi.quantity*p.price_euro)/soi.item_per_order)-(o.shipping_cost_euros/soi.item_per_order),2) as total_discount_by_item_euros,
+        round ((price_product / quantity),2) as price_per_item
 
 FROM 
     order_items oi

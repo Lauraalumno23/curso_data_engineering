@@ -128,6 +128,14 @@ models:
             data_type: number
             constraints:
               - type: not_null
+          - name: price_per_item
+            description: >
+                Precio por articulo.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
 
   - name: int_users_orders_addresses
     config:
