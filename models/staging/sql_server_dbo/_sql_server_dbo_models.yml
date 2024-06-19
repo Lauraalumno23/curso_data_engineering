@@ -338,6 +338,8 @@ models:
                 Estado del pedido.
             tests:
               - not_null
+              - accepted_values:
+                  values: [0,1,2]
             data_type: number
             constraints:
               - type: not_null
@@ -522,12 +524,15 @@ models:
           - name: STATUS
             description: >
                 Estado de la promocion.
-            data_type: text
+            data_type: varchar
             constraints:
               - type: not_null
           - name: status_modo
             description: >
                 Estado en el que se encuentra la promocion .
+            tests:
+              - accepted_values:
+                  values: [0,1]
             data_type: number
             constraints:
               - type: not_null
@@ -753,7 +758,9 @@ models:
             description: >
                 Tipo del estado del producto.
             tests:
-              - not_null 
+              - not_null
+              - accepted_values:
+                  values: [0,1,2]
             data_type: number
             constraints:
               - type: not_null
@@ -823,7 +830,9 @@ models:
             description: >
                 Estado de la promocion.
             tests:
-              - not_null 
+              - not_null
+              - accepted_values:
+                  values: [0,1]
             data_type: number
             constraints:
               - type: not_null
