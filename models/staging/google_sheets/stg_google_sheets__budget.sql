@@ -18,7 +18,7 @@ renamed_casted AS (
         product_id,
         quantity::integer as quantity,
         month as date,
-        _fivetran_synced AS date_load
+        _fivetran_synced::date AS date_load
     FROM src_budget
     )
 

@@ -4,7 +4,7 @@ models:
   - name: stg_google_sheets__budget
     config:
       contract:
-        enforced: false
+        enforced: true
     description: "Datos de la tabla stg_google_sheets__budget"
     columns:
       - name: budget_id
@@ -13,7 +13,7 @@ models:
         tests:
           - not_null
           - unique
-        data_type: number
+        data_type: varchar
         constraints:
           - type: not_null
       - name: _row
@@ -57,6 +57,6 @@ models:
           Fecha en la que los datos fueron cargados.
         tests:
           - not_null
-        data_type: timestamp_tz
+        data_type: date
         constraints:
           - type: not_null
