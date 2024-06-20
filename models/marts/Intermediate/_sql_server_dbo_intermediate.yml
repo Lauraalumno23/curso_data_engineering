@@ -39,6 +39,22 @@ models:
             data_type: text
             constraints:
               - type: not_null
+          - name: vendedores_id
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: order_items_id
+            description: >
+                UUID para cada articulo unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
           - name: order_total_euros
             description: >
                 Coste total del pedido.
@@ -131,6 +147,14 @@ models:
           - name: price_per_item
             description: >
                 Precio por articulo.
+            tests:
+              - not_null
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: price_total_order_item
+            description: >
+                Precio total del pedido por articulo.
             tests:
               - not_null
             data_type: number

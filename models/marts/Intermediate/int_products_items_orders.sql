@@ -7,6 +7,7 @@ WITH src_items_orders AS (
 
 order_items AS (
     SELECT 
+        order_items_id,
         order_id,
         quantity,
         product_id
@@ -27,14 +28,17 @@ orders as (
     order_cost_euros,
     shipping_cost_euros, 
     user_id,
-    address_id
+    address_id,
+    vendedores_id
     FROM {{ ref('stg_sql_server_dbo_orders') }}
 )
 
 SELECT
         oi.order_id,
+        oi.order_items_id,
         o.user_id,
         o.address_id,
+        o.vendedores_id,
         o.order_total_euros,
         oi.quantity,
         oi.product_id,
@@ -46,7 +50,8 @@ SELECT
         round (sum(oi.quantity/p.price_euro)over(partition by oi.order_id),2) as price_per_order,        
         round ((p.price_euro * oi.quantity) + (o.shipping_cost_euros / soi.item_per_order),2) AS order_cost_and_shipping_by_item_euros,
         round (((o.order_total_euros/soi.item_per_order)-(oi.quantity*p.price_euro)/soi.item_per_order)-(o.shipping_cost_euros/soi.item_per_order),2) as total_discount_by_item_euros,
-        round ((price_product / quantity),2) as price_per_item
+        round ((price_product / oi.quantity),2) as price_per_item,
+        round((oi.quantity * price_per_item),2) as price_total_order_item
 
 FROM 
     order_items oi

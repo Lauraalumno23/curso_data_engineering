@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: fact_finanzas
+    config:
+      contract:
+        enforced: false
+    description: "Tabla de hechos de finanzas"
+    columns:
+          - name: vendedores_id
+            description: >
+                UUID para cada vendedor unico en la base de datos.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: first_name
+            description: >
+                Nombre del vendedor.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: last_name
+            description: >
+                Apellido del vendedor.
+            tests:
+                - not_null
+            data_type: text
+            constraints:
+              - type: not_null
+          - name: salary
+            description: >
+                Salario del vendedor.
+            tests:
+                - not_null
+                - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_order_sellers
+            description: >
+                Total de pedidos vendidos por un vendedor.
+            tests:
+                - not_null
+                - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
+          - name: total_sales_sellers
+            description: >
+                Total de ventas por vendedor.
+            tests:
+                - not_null
+                - positive_values
+            data_type: number
+            constraints:
+              - type: not_null
